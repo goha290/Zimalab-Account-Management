@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zimalab</title>
+    <link rel="stylesheet" href="styleReg.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="registration.html">CUSTOMER REGISTRATION</a></li>
+                <li><a href="list.php">LIST OF ACCOUNTS</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <form action="reg.php" method="post">
+            <h1>CUSTOMER REGISTRATION</h1>
+            <div class="input-box">
+                <input type="text" name="firstName" id="firstName" placeholder="First name" required>
+            </div>
+            <div class="input-box">
+                <input type="text" name="lastName" id="lastName" placeholder="Last name" required>
+            </div>
+            <div class="input-box">
+                <input type="text" name="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <input type="text" name="companyName" id="companyName" placeholder="Company name">
+            </div>
+            <div class="input-box">
+                <input type="text" name="position" id="position" placeholder="Position">
+            </div>
+            <div class="input-box">
+                <input type="text" name="phone" id="phone" placeholder="Phone number">
+            </div>
+            <div class="input-box">
+                <input type="text" name="secondPhone" id="secondPhone" placeholder="Second phone">
+            </div>
+            <div class="input-box">
+                <input type="text" name="alternatePhone" id="alternatePhone" placeholder="Alternate phone">
+            </div>
+            <button type="submit" class="btn-reg">Register</button>
+        </form>
+    </div>
+</body>
+
+</html>
