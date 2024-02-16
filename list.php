@@ -33,69 +33,21 @@
         <th>Delete</th>
       </tr>
       <?php
-      // Подключение к БД
-      $conn = new mysqli("localhost", "root", "root", "accountmanagementdb");
+      require_once('AccountList.php');
 
-      // Проверка подключения
-      if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-      }
+      $page = isset($_GET["page"]) ? $_GET["page"] : 1;
 
-      $limit = 10; // количество записей на странице
+      $accountList = new AccountList("localhost", "root", "root", "accountmanagementdb");
 
-      // Получение номера текущей страницы
-      if (isset($_GET["page"])) {
-        $page = $_GET["page"];
-      } else {
-        $page = 1;
-      };
-      $start_from = ($page - 1) * $limit;
-
-      // Получение данных из БД с учетом пагинации
-      $sql = "SELECT id, firstName, lastName, emailAddress, companyName, position, phoneNumber, secondaryPhone, alternatePhone FROM accounts LIMIT $start_from, $limit";
-      $result = $conn->query($sql);
-
-      // Вывод данных в таблицу
-      if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-          echo "<tr>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["firstName"] . "</td>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["lastName"] . "</td>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["emailAddress"] . "</td>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["companyName"] . "</td>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["position"] . "</td>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["phoneNumber"] . "</td>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["secondaryPhone"] . "</td>";
-          echo "<td data-type='text' data-id='" . $row['id'] . "' onclick='editCell(this)'>" . $row["alternatePhone"] . "</td>";
-          echo "<td>";
-          echo "<a href='change.php?id=" . $row["id"] . "'>Change</a>"; // Ссылка для изменения записи
-          echo "</td>";
-          echo "<td>";
-          echo "<a href='delete.php?id=" . $row["id"] . "'>Delete</a>"; // Ссылка для удаления записи
-          echo "</td>";
-          echo "</tr>";
-        }
-      } else {
-        echo "0 results";
-      }
-
-      // Добавление пагинации
-      $sql = "SELECT COUNT(id) FROM accounts";
-      $result = $conn->query($sql);
-      $row = $result->fetch_row();
-      $total_records = $row[0];
-      $total_pages = ceil($total_records / $limit);
-
-      // Вывод пагинации
-      for ($i = 1; $i <= $total_pages; $i++) {
-        echo "<a href='list.php?page=" . $i . "'>" . $i . "</a> ";
-      };
-
-      $conn->close();
+      echo $accountList->getAccounts($page);
       ?>
     </table>
-
-  </div>
+    <div>
+      <?php
+      echo $accountList->getTotalPages();
+      $accountList->closeConnection();
+      ?>
+    </div>
   </div>
 </body>
 
